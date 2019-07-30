@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ProductItem from './ProductItem/ProductItem';
 import postApi from '../../../api/postApi';
 
 
 export default class NewArrival extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
 
   constructor (props) {
     super(props);
@@ -20,15 +17,13 @@ export default class NewArrival extends Component {
   async componentDidMount() {
     try {
       const params = {
-        _limit: 10,
-        _page: 1,
+        //limit: 10,
       };
       const response = await postApi.getAll(params);
-
       // const productList = response.data;
-      const { data: productList } = response;
+      const { body: productList } = response;
       this.setState({ productList, postLoading: false });
-      console.log(object)
+      console.log(productList);
     } catch (error) {
       console.log('Failed to load post list: ', error.message);
     }
@@ -64,7 +59,7 @@ export default class NewArrival extends Component {
                 <div className="col">
                     <div className="product-grid" data-isotope="{ &quot;itemSelector&quot;: &quot;.product-item&quot;, &quot;layoutMode&quot;: &quot;fitRows&quot; }">
                     {/* Product 1 */}
-                    <ProductItem />
+                    {this.state.productList.map(item => (<ProductItem productName="grwrge" />))}
 
                     </div>
                 </div>

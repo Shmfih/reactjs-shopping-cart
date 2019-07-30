@@ -1,5 +1,5 @@
 import queryString from "./queryString.js";
-import AppConstants from '../appConstants.js';
+import AppConstants from '../appConstants.js'
 
 
 const request = async(url, options) => {
@@ -15,7 +15,7 @@ const request = async(url, options) => {
                 
         
             const response = await fetch(url,requestOptions);
-
+            //console.log(requestOptions);
         
             if(response.status >=200 && response.status <300){
             return response.json();
@@ -26,15 +26,15 @@ const request = async(url, options) => {
 
     } catch {
         // Handle error
-        const error = new Error(response.status);
-        throw error;
+        //const error = new Error(response.status);
+        //throw error;
     };
 
 };
 
 const get = async (url, params) => {
     
-    const paramString = params ? `?${queryString.stringify(params)}` : '';
+    const paramString = params ? `?${JSON.stringify(params)}` : '';
     //console.log(queryString.stringify(params));
     const requestUrl = `${url}${paramString}`;
     //console.log(requestUrl);

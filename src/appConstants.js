@@ -9,6 +9,6 @@ const AppConstants = {
   DEFAULT_IMAGE_HEIGHT: 400,
 
   // API URL
-  API_URL: 'http://api.demo.nordiccoder.com/product',
+  API_URL: 'http://api.demo.nordiccoder.com/api',
 };
 export default AppConstants;

@@ -4,14 +4,13 @@ import AppConstants from "../appConstants.js";
 class PostAPI {
 
     getResourceName(){
-        return 'posts';
+        return 'products';
     }
 
     getAll (params) {
         const url = `${AppConstants.API_URL}/${this.getResourceName()}`;
         const defaultParams = { _page: AppConstants.DEFAULT_PAGE, _limit: AppConstants.DEFAULT_LIMIT};
         
-        //console.log(url)
         if(params){    
             return fetchClient.get(url,params);
         }

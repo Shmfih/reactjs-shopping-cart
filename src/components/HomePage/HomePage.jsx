@@ -7,6 +7,7 @@ import NewArrival from '../HomePage/NewArrival/NewArrival';
 import DealOfTheWeek from '../HomePage/DealOfTheWeek/DealOfTheWeek';
 import ShippingInformation from '../HomePage/ShippingInformation/ShippingInformation';
 import Footer from '../Shared/Footer/Footer';
+import '../../styles/main_styles.css';
 
 class HomePage extends PureComponent {
     render() {
