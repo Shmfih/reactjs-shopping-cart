@@ -1,24 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
 import './HomePage.scss';
-import Header from './components/Shared/Header/Header';
-import HeroBanner from './components/HomePage/HeroBanner/HeroBanner';
-import QuickCatetories from './components/HomePage/QuickCatetories/QuickCatetories';
-import NewArrival from './components/HomePage/NewArrival/NewArrival';
-import DealOfTheWeek from './components/HomePage/DealOfTheWeek/DealOfTheWeek';
-import ShippingInformation from './components/HomePage/ShippingInformation/ShippingInformation';
-import Footer from './components/Shared/Footer/Footer';
+import HomePage from './components/HomePage/HomePage';
+import Categories from './components/Categories/Categories';
+import Single from './components/Single/Single';
+import { BrowserRouter, Switch, Route, Link, NavLink } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-        <Header />
-        <HeroBanner />
-        <QuickCatetories />
-        <NewArrival />
-        <DealOfTheWeek />
-        <ShippingInformation />
-        <Footer />
+      <BrowserRouter>
+        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/categories">Categories</NavLink>
+        <NavLink to="/Single">Single</NavLink>
+      <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route exact path="/single" component={Single} />
+      <Route exact path="/categories" component={Categories} />
+      </Switch>
+      </BrowserRouter>
     </div>
   );
 }
