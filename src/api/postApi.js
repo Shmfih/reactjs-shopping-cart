@@ -3,9 +3,6 @@ import AppConstants from "../appConstants.js";
 
 class PostAPI {
 
-    getResourceName(){
-        return 'products';
-    }
 
     getAll (params) {
         const url = `${AppConstants.API_URL}/${this.getResourceName()}`;

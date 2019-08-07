@@ -8,18 +8,17 @@ import DealOfTheWeek from '../HomePage/DealOfTheWeek/DealOfTheWeek';
 import ShippingInformation from '../HomePage/ShippingInformation/ShippingInformation';
 import Footer from '../Shared/Footer/Footer';
 import '../../styles/main_styles.css';
+import '../../styles/responsive.css'
 
 class HomePage extends PureComponent {
     render() {
         return (
             <div>
-                <Header />
                 <HeroBanner />
                 <QuickCatetories />
                 <NewArrival />
                 <DealOfTheWeek />
                 <ShippingInformation />
-                <Footer />
             </div>
         );
     }

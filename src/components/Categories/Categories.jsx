@@ -12,18 +12,14 @@ import '../../styles/categories_responsive.css';
 class Categories extends PureComponent {
     render() {
         return (
-            <div>
-               <Header />
                <div class="container product_section_container">
 		        <div class="row">
 			    <div class="col product_section clearfix">
                <Breadcrumbs />
                <Sidebar />
                <MainProductsContent />
-               </div></div></div>
-               <Benefit />
-               <Footer /> 
-            </div>
+               </div></div>
+               </div>
         );
     }
 }
