@@ -7,8 +7,8 @@ import NewArrival from '../HomePage/NewArrival/NewArrival';
 import DealOfTheWeek from '../HomePage/DealOfTheWeek/DealOfTheWeek';
 import ShippingInformation from '../HomePage/ShippingInformation/ShippingInformation';
 import Footer from '../Shared/Footer/Footer';
-import '../../styles/main_styles.css';
-import '../../styles/responsive.css'
+import '../HomePage/HomePage.scss';
+
 
 class HomePage extends PureComponent {
     render() {
@@ -18,7 +18,6 @@ class HomePage extends PureComponent {
                 <QuickCatetories />
                 <NewArrival />
                 <DealOfTheWeek />
-                <ShippingInformation />
             </div>
         );
     }

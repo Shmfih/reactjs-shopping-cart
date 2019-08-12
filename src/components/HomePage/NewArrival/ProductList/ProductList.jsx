@@ -11,7 +11,6 @@ class ProductList extends PureComponent {
 
     render() {
         const { productList } = this.props;
-        console.log(productList[1]);
         // console.log( this.props.productList);
         return (
             <div>

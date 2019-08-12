@@ -8,18 +8,26 @@ import Sidebar from './Sidebar/Sidebar';
 import Benefit from './Benefit/Benefit';
 import '../../styles/categories_styles.css';
 import '../../styles/categories_responsive.css';
+import BottomPageProductSorting from './MainProductsContent/BottomPageProductSorting/BottomPageProductSorting';
 
 class Categories extends PureComponent {
     render() {
         return (
+            <div>
+                <Header />
                <div class="container product_section_container">
 		        <div class="row">
 			    <div class="col product_section clearfix">
                <Breadcrumbs />
                <Sidebar />
                <MainProductsContent />
-               </div></div>
                </div>
+               
+               </div>
+               
+               </div>
+               <Footer />
+            </div>
         );
     }
 }

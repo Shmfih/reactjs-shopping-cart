@@ -2,6 +2,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 class ProductItem extends PureComponent {
+    constructor (props) {
+        super(props);
+        this.state = {
+            productList: [],
+            isLoading: true,
+          };
+    }
+
     render() {
         return (
             <div>

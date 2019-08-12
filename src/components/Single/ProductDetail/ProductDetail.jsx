@@ -1,8 +1,36 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import '../ProductDetail/ProductDetail.scss';
+import { thisExpression } from '@babel/types';
 
-class ProductDetail extends Component {
+class ProductDetail extends PureComponent {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            productQuantity: 1,
+            currentImage: this.props.product.image,
+        }
+    }
+
+    handleIncreaseProductClick = () => {
+        this.setState({ productQuantity: this.state.productQuantity + 1 })
+    }
+
+    handleDecreaseProductClick = () => {
+        if(this.state.productQuantity===1) return;
+        this.setState({ productQuantity: this.state.productQuantity - 1 })
+    }
+
+    handleChangeImage = (image) => {
+        this.setState({currentImage: image});
+        console.log(this.state)
+    }
+
     render() {
+        const { product } = this.props;
+        const { productQuantity, currentImage } = this.state;
+        console.log(this.props.product);
         return (
             <div>
                 <div className="row">
@@ -12,15 +40,21 @@ class ProductDetail extends Component {
                                 <div className="col-lg-3 thumbnails_col order-lg-1 order-2">
                                 <div className="single_product_thumbnails">
                                     <ul>
-                                    <li><img src="images/single_1_thumb.jpg" alt="" data-image="images/single_1.jpg" /></li>
-                                    <li className="active"><img src="images/single_2_thumb.jpg" alt="" data-image="images/single_2.jpg" /></li>
-                                    <li><img src="images/single_3_thumb.jpg" alt="" data-image="images/single_3.jpg" /></li>
+                                        
+                                    <li className={product.image===currentImage?"active":""} onClick={() => this.handleChangeImage(product.image)}>
+                                        <img src={`${product.thumbnail}`} alt="" />
+                                    </li>
+                                    {product.thumbnails.map((thumbnail,idx) => (
+                                        <li key={idx} className={product.images[idx]===currentImage?"active":""} onClick={() => this.handleChangeImage(product.images[idx])}>
+                                            <img src={thumbnail} alt={thumbnail} />
+                                        </li>
+                                    ))}
                                     </ul>
                                 </div>
                                 </div>
                                 <div className="col-lg-9 image_col order-lg-2 order-1">
                                 <div className="single_product_image">
-                                    <div className="single_product_image_background" style={{backgroundImage: 'url(images/single_2.jpg)'}} />
+                                    <div className="single_product_image_background" style={{backgroundImage: `url(${currentImage})`}} />
                                 </div>
                                 </div>
                             </div>
@@ -29,14 +63,14 @@ class ProductDetail extends Component {
                         <div className="col-lg-5">
                             <div className="product_details">
                             <div className="product_details_title">
-                                <h2>Pocket cotton sweatshirt</h2>
-                                <p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
+                                <h2>{product.name}</h2>
+                                <p>{product.shortDescription}</p>
                             </div>
                             <div className="free_delivery d-flex flex-row align-items-center justify-content-center">
                                 <span className="ti-truck" /><span>free delivery</span>
                             </div>
-                            <div className="original_price">$629.99</div>
-                            <div className="product_price">$495.00</div>
+                            <div className="original_price">{product.originalPrice}</div>
+                            <div className="product_price">{product.salePrice}</div>
                             <ul className="star_rating">
                                 <li><i className="fa fa-star" aria-hidden="true" /></li>
                                 <li><i className="fa fa-star" aria-hidden="true" /></li>
@@ -55,9 +89,9 @@ class ProductDetail extends Component {
                             <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                                 <span>Quantity:</span>
                                 <div className="quantity_selector">
-                                <span className="minus"><i className="fa fa-minus" aria-hidden="true" /></span>
-                                <span id="quantity_value">1</span>
-                                <span className="plus"><i className="fa fa-plus" aria-hidden="true" /></span>
+                                <span className="minus" onClick={() => this.handleDecreaseProductClick()}><i className="fa fa-minus" aria-hidden="true" /></span>
+                                <span id="quantity_value">{productQuantity}</span>
+                                <span className="plus" onClick={() => this.handleIncreaseProductClick()}><i className="fa fa-plus" aria-hidden="true" /></span>
                                 </div>
                                 <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                                 <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />

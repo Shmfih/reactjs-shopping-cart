@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import './Header.scss';
+import '../Header/Header.scss';
 
 class Header extends PureComponent {
   static propTypes = {
@@ -56,19 +56,19 @@ class Header extends PureComponent {
                 <div className="row">
                 <div className="col-lg-12 text-right">
                     <div className="logo_container">
-                    <a href="#">Nordic<span>Shop</span></a>
+                    <NavLink exact to="/">Nordic<span>Shop</span></NavLink>
                     </div>
                     <nav className="navbar">
                     <ul className="navbar_menu">
                         <li><NavLink exact to="/">home</NavLink></li>
-                        <li><NavLink exact to="/categories">shop</NavLink></li>
+                        <li><NavLink exact to="/shop">shop</NavLink></li>
                         <li><NavLink exact to="#">promotion</NavLink></li>
-                        <li><NavLink exact to-="#" target="blank">blog</NavLink></li>
+                        <li><NavLink exact to="#" target="blank">blog</NavLink></li>
                         <li><NavLink exact to="contact">contact</NavLink></li>
                     </ul>
                     <ul className="navbar_user">
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i className="fa fa-search" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i className="fa fa-user" aria-hidden="true"></i></a></li>
                         <li className="checkout">
                         <a href="#">
                             <i className="fa fa-shopping-cart" aria-hidden="true" />

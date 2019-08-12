@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import './QuickCategories.scss';
 
 class QuickCatetories extends Component {
     render() {
@@ -12,21 +14,21 @@ class QuickCatetories extends Component {
                         <div className="col-md-4">
                             <div className="banner_item align-items-center" style={{backgroundImage: 'url(images/banner_1.jpg)'}}>
                             <div className="banner_category">
-                                <a href="categories.html">women's</a>
+                                <NavLink exact to="/shop?category=women">women's</NavLink>
                             </div>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="banner_item align-items-center" style={{backgroundImage: 'url(images/banner_2.jpg)'}}>
                             <div className="banner_category">
-                                <a href="categories.html">accessories's</a>
+                                <NavLink exact to="/shop?category=accessories">accessories's</NavLink>
                             </div>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="banner_item align-items-center" style={{backgroundImage: 'url(images/banner_3.jpg)'}}>
                             <div className="banner_category">
-                                <a href="categories.html">men's</a>
+                                <NavLink exact to="/shop?category=men">men's</NavLink>
                             </div>
                             </div>
                         </div>

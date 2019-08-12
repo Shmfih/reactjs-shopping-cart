@@ -1,63 +1,59 @@
-import queryString from "./queryString.js";
-import AppConstants from '../appConstants.js'
+import queryString from 'query-string';
 
+// Base request
+const request = async (url, options = {}) => {
+  try {
+    // Headers
+    const headers = new Headers();
+    headers.set('Content-Type', 'application/json');
 
-const request = async(url, options) => {
+    // Merge options
+    const requestOptions = {
+      ...options,
+      headers,
+    }
 
-    try {
-        const requestOptions = {
-            ...options,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-        };
-        
-                
-        
-            const response = await fetch(url,requestOptions);
-            //console.log(requestOptions);
-        
-            if(response.status >=200 && response.status <300){
-            return response.json();
-            }
+    // Send request
+    const response = await fetch(url, requestOptions);
 
-        const error = new Error(response.status);
-        throw error;
+    // fetch treats 4xx response as successful
+    // so we need to detect and handle error by ourself
+    if (response.ok) {
+      // Parse reponse to JSON
+      return response.json();
+    }
 
-    } catch {
-        // Handle error
-        //const error = new Error(response.status);
-        //throw error;
-    };
-
+    // Handle error
+    const error = new Error(response.statusText);
+    error.response = response;
+    throw error;
+  } catch (error) {
+    // Just throw current error
+    throw error
+  }
 };
 
+// Get single or plural
 const get = async (url, params) => {
-    
-    const paramString = params ? `?${JSON.stringify(params)}` : '';
-    //console.log(queryString.stringify(params));
-    const requestUrl = `${url}${paramString}`;
-    //console.log(requestUrl);
-    return request(requestUrl, { method: 'GET' });
+  const paramsString = params ? `?${queryString.stringify(params)}` : '';
+  const requestUrl = `${url}${paramsString}`;
+    console.log(paramsString);
+  return request(requestUrl, { method: 'GET' });
 };
 
-const post = (url, body) => request(url, {
-    body: JSON.stringify(body),
-    method: 'POST'
-});
+// Add new
+const post = async (url, body) => request(url, { method: 'POST', body: JSON.stringify(body) });
 
-const patch = (url, body) => request(url, {
-    body: JSON.stringify(body),
-    method: 'PATCH'
-});
+// Update
+const patch = async (url, body) => request(url, { method: 'PATCH', body: JSON.stringify(body) });
 
-const deleteRequest = (url) => request(url, { method: 'DELETE'});
+// Remove
+const deleteRequest = async (url) => request(url, { method: 'DELETE' });
 
 const fetchClient = {
-    get,
-    post,
-    patch,
-    delete: deleteRequest,
+  get,
+  post,
+  patch,
+  delete: deleteRequest,
 };
-
 export default fetchClient;

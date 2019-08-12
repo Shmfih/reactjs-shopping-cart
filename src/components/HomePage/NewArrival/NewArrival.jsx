@@ -1,47 +1,79 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ProductItem from './ProductItem/ProductItem';
 import postApi from '../../../api/postApi';
 import ProductList from './ProductList/ProductList';
 import productApi from '../../../api/productApi';
+import '../NewArrival/NewArrival.scss';
+import ProductSort from './ProductSort';
+import categoriesApi from '../../../api/categoriesApi';
 
 
-export default class NewArrival extends Component {
+export default class NewArrival extends PureComponent {
 
   constructor (props) {
     super(props);
     this.state = {
         productList: [],
-        isLoading: true,
+        filterList: [],
+        currentFilter: "all",
+        postLoading: true,
       };
   }
 
   async componentDidMount() {
     try {
-      const filter = {
-        limit: 10,
-        skip: 0,
-        order: 'name desc',
-        where: {
-          //categoryId: "5b822e7f9c300309b7e9befc",
-        }
-      };
+      const { currentFilter } =this.state; 
 
-      const params = {
-        filter: JSON.stringify(filter),
-      }
-      const response = await productApi.getAll(params);
-      // const productList = response.data;
-      const { body: productList } = response;
-      this.setState({ productList, postLoading: false });
-      console.log(productList);
+      const response = await this.getNewArrivalList(currentFilter);
+      
+      // Get categories list
+      const categoriesList = await categoriesApi.getAll();
+      const filterList = categoriesList.body;
+      // Set state
+      this.setState({ filterList, postLoading: false });
+
     } catch (error) {
       console.log('Failed to load post list: ', error.message);
     }
   }
 
+  getNewArrivalList = async (categoriesFilter) => {
+    try {
+      
+      let filter = {
+        limit: 10,
+        skip: 0,
+        order: 'date desc',
+      };
+      if(!(categoriesFilter==="all")){
+        filter = {
+          ...filter,
+          where: {
+          categoryId: categoriesFilter,}
+        ,}};
+      // Get product list
+      const params = {
+        filter: JSON.stringify(filter),
+      }
+
+      const response = await productApi.getAll(params);
+      const { body: productList } = response;
+      this.setState({ productList, postLoading: false });
+
+    } catch (error) {
+      console.log('Failed to load post list: ', error.message);
+    }
+  }
+
+  handleChangleFilter = (categoriesId) => {
+    this.setState({currentFilter: categoriesId});
+    this.getNewArrivalList(categoriesId);
+  }
 
   render() {
+    const { productList, filterList, currentFilter, postLoading } = this.state;
+    if(postLoading) return "Loading...";
     return (
       <div>
         <div className="new_arrivals">
@@ -55,21 +87,14 @@ export default class NewArrival extends Component {
             </div>
             <div className="row align-items-center">
             <div className="col text-center">
-                <div className="new_arrivals_sorting">
-                <ul className="arrivals_grid_sorting clearfix button-group filters-button-group">
-                    <li className="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-                    <li className="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
-                    <li className="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
-                    <li className="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
-                </ul>
-                </div>
+                <ProductSort filterList={filterList} currentFilter={currentFilter} onChangeFilter={this.handleChangleFilter} />
             </div>
             </div>
             <div className="row">
             <div className="col">
                 
                 {/* Product */}
-                <ProductList productList={this.state.productList}/>
+                <ProductList productList={productList}/>
 
             </div>
             </div>
