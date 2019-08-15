@@ -1,33 +1,28 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import {NavLink} from 'react-router-dom';
 
 class ProductItem extends PureComponent {
-    constructor (props) {
-        super(props);
-        this.state = {
-            productList: [],
-            isLoading: true,
-          };
-    }
 
     render() {
+        const { product } = this.props;
+        const isDiscount = !(product.originalPrice === product.salePrice)
         return (
-            <div>
-                <div className="product-item men">
-                    <div className="product discount product_filter">
-                    <div className="product_image">
-                        <img src="images/product_1.png" alt="" />
-                    </div>
-                    <div className="favorite favorite_left" />
-                    <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
-                    <div className="product_info">
-                        <h6 className="product_name"><a href="single.html">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
-                        <div className="product_price">$520.00<span>$590.00</span></div>
-                    </div>
-                    </div>
-                    <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+            <div className="product-item">
+                <div className={`product product_filter ${isDiscount?"discount":""}`}>
+                <div className="product_image">
+                    <img src={product.thumbnail} alt="abc" />
                 </div>
+                <div className="favorite favorite_left" />
+                {isDiscount && <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>{`-$${product.originalPrice - product.salePrice}`}</span></div>}
+                <div className="product_info">
+                    <h6 className="product_name"><NavLink to={ `/product/${product.id}`}>{product.name}</NavLink></h6>
+                    <div className="product_price">{`$${product.salePrice}`}{isDiscount && <span>{`$${product.originalPrice}`}</span>}</div>
+                </div>
+                </div>
+                <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
             </div>
+
         );
     }
 }

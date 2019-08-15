@@ -52,6 +52,7 @@ export default class NewArrival extends PureComponent {
           where: {
           categoryId: categoriesFilter,}
         ,}};
+      console.log(filter);
       // Get product list
       const params = {
         filter: JSON.stringify(filter),
@@ -59,6 +60,7 @@ export default class NewArrival extends PureComponent {
 
       const response = await productApi.getAll(params);
       const { body: productList } = response;
+      console.log(response);
       this.setState({ productList, postLoading: false });
 
     } catch (error) {
@@ -74,6 +76,7 @@ export default class NewArrival extends PureComponent {
   render() {
     const { productList, filterList, currentFilter, postLoading } = this.state;
     if(postLoading) return "Loading...";
+    console.log(productList);
     return (
       <div>
         <div className="new_arrivals">

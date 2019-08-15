@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class BottomPageProductSorting extends PureComponent {
     render() {
         return (
-            <div>
                 <div className="product_sorting_container product_sorting_container_bottom clearfix">
                         <ul className="product_sorting">
                             <li>
@@ -33,7 +32,6 @@ class BottomPageProductSorting extends PureComponent {
                             <div id="next_page_1" className="page_next"><a href="#"><i className="fa fa-long-arrow-right" aria-hidden="true" /></a></div>
                         </div>
                         </div>
-            </div>
         );
     }
 }

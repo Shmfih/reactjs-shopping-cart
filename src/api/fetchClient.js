@@ -37,7 +37,7 @@ const request = async (url, options = {}) => {
 const get = async (url, params) => {
   const paramsString = params ? `?${queryString.stringify(params)}` : '';
   const requestUrl = `${url}${paramsString}`;
-    console.log(paramsString);
+    //console.log(paramsString);
   return request(requestUrl, { method: 'GET' });
 };
 

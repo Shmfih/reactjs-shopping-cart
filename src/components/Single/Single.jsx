@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ProductDetail from './ProductDetail/ProductDetail';
 import Breadcrumbs from '../Shared/Breadcrumbs/Breadcrumbs';
 import productApi from '../../api/productApi';
-// import '../Single/Single.scss';
+//import '../Single/Single.scss';
 import '../HomePage/HomePage.scss';
 import Footer from '../Shared/Footer/Footer';
 import Header from '../Shared/Header/Header';
