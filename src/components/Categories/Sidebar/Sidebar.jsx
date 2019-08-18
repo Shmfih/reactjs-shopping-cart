@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import PriceRangeFiltering from './PriceRangeFiltering/PriceRangeFiltering';
 import {NavLink} from 'react-router-dom';
+import InputRange from 'react-input-range';
+import Slider from '@material-ui/core/Slider';
 
 class Sidebar extends PureComponent {
 
@@ -10,7 +12,7 @@ class Sidebar extends PureComponent {
     }
 
     render() {
-        const {categoriesList, currentFilter, onChangeCategories} = this.props;
+        const {categoriesList, currentFilter, onChangeCategories, sliderValue, onSliderChangeValue} = this.props;
         // Covert quick categories into array
         const categoriesArray = Object.entries(categoriesList);
         console.log(currentFilter.currentCategories);
@@ -33,9 +35,35 @@ class Sidebar extends PureComponent {
                         <li><a href="categories.html">shop</a></li>
                         </ul>
                     </div>
-                    <PriceRangeFiltering />
-                </div>
+
+                    {/* Slider bar */}
+                    <div className="sidebar_section">
+                    <div className="sidebar_title">
+                        <h5>Filter by Price</h5>
+                    </div>
+                    <p>
+                        <input type="text" id="amount" readOnly style={{border: 0, color: '#f6931f', fontWeight: 'bold'}}>
+                            {/* ${sliderValue.min} - ${sliderValue.max} */}
+                        </input>
+                    </p>
+                    {/* <InputRange
+                        maxValue={1000}
+                        minValue={0}
+                        value={sliderValue}
+                        onChange={value => onSliderChangeValue(value)}
+                     /> */}
+                           {/* <Slider
+                                value={[10,20]}
+                                onChange={handleChange}
+                                valueLabelDisplay="auto"
+                                aria-labelledby="range-slider"
+                                getAriaValueText={valuetext}
+                            /> */}
+                    <div className="filter_button"><span>filter</span></div>
+                    </div>
+                            
             </div>
+        </div>
         );
     }
 }

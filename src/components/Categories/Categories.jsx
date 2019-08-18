@@ -12,6 +12,7 @@ import BottomPageProductSorting from './MainProductsContent/BottomPageProductSor
 import productApi from '../../api/productApi';
 import categoriesApi from '../../api/categoriesApi';
 import queryString from '../../api/queryString';
+import { thisExpression } from '@babel/types';
 
 class Categories extends PureComponent {
     constructor(props){
@@ -31,7 +32,9 @@ class Categories extends PureComponent {
             },
             productList: [],
             quickCategories: {},
+            sliderValue: [200,500],
             productLoading: true,
+
         }
     }
 
@@ -126,9 +129,16 @@ class Categories extends PureComponent {
         
     }
 
+    handleChangeFilter = (newFilter) => {
+        this.setState({...this.state, currentFilter: newFilter});
+        const { sortBy, currentPage, currentCategories } = this.state;
+        // this.props.history.push(`/product?${sortBy?`sort=${sortBy}&`:""}page=${currentPage}&categories=${currentCategories}`);
+        this.getProductList(newFilter);
+    }
+
     render() {
         console.log(this.state);
-        const { currentFilter, productLoading, productList, quickCategories } = this.state;
+        const { currentFilter, productLoading, productList, quickCategories, sliderValue } = this.state;
         if(productLoading) return "";
         return (
             <div>
@@ -136,8 +146,13 @@ class Categories extends PureComponent {
 		        <div className="row">
 			    <div className="col product_section clearfix">
                <Breadcrumbs />
-               <Sidebar categoriesList={quickCategories} currentFilter={currentFilter} onChangeCategories={this.handleChangeCategories} />
-               <MainProductsContent productList={productList} />
+               <Sidebar
+                    categoriesList={quickCategories} onChangeCategories={this.handleChangeCategories}
+                    sliderValue = {sliderValue} onSliderChangeValue = {this.handleSliderChangeValue}
+                    currentFilter={currentFilter} />
+               <MainProductsContent productList={productList}
+                currentFilter = {currentFilter}
+                onChangeFilter={this.handleChangeFilter} />
                </div>
                
                </div>
