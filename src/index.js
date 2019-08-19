@@ -3,19 +3,24 @@ import ReactDOM from 'react-dom';
 // import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from'redux';
+// import { createStore } from'redux';
 import { Provider } from 'react-redux';
+// import cartReducer from './reducer/cartReducer';
 import store from "./store";
 
 class Main extends PureComponent {
-    render() {
-      return (
-        <Provider store={store}>
-          <App />
-        </Provider>
-      );
-    }
+  render() {
+    console.log('Store: ', store.getState());
+    // const store = createStore(cartReducer,{});
+    // console.log(store.getState);
+    // store.subscribe(() => console.log(store.getState()))
+    return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
   }
+}
 
 
 

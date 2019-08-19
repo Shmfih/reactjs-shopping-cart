@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ProductItem from '../ProductItem/ProductItem';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addProductToCart } from '../../../../action/index';
+import ActionType from '../../../../action/actionType'
 
 class ProductList extends PureComponent {
 
@@ -10,13 +14,13 @@ class ProductList extends PureComponent {
     }
 
     render() {
-        const { productList } = this.props;
-        // console.log( this.props.productList);
+        const { productList, addProductToCart } = this.props;
+        console.log( this.props);
         return (
             <div>
                 <div className="product-grid">
                 {productList.map(product => (
-                    <ProductItem key={product.id} product={product} />
+                    <ProductItem key={product.id} product={product} onAddToCartButtonClick={addProductToCart} />
                 ))}
                     
                 </div>
@@ -29,4 +33,8 @@ ProductList.propTypes = {
 
 };
 
-export default ProductList;
+const mapDispatchToProps = dispatch => ({
+    addProductToCart: (product, quantity) => dispatch(addProductToCart(product, quantity))
+  });
+
+export default connect(null, mapDispatchToProps)(ProductList);

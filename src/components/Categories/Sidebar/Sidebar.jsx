@@ -7,15 +7,27 @@ import Slider from '@material-ui/core/Slider';
 
 class Sidebar extends PureComponent {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            sliderValue: {
+                min: 100,
+                max: 500,
+            }
+        };
+
+    }
     toTitleCase(str) {
         return str[0].toUpperCase() + str.slice(1);
     }
 
+    handleSliderChangeValue = (newValue) =>{
+        this.setState({sliderValue: newValue});
+    }
     render() {
-        const {categoriesList, currentFilter, onChangeCategories, sliderValue, onSliderChangeValue} = this.props;
+        const {categoriesList, currentFilter, onChangeCategories, onSliderChangeValue} = this.props;
         // Covert quick categories into array
         const categoriesArray = Object.entries(categoriesList);
-        console.log(currentFilter.currentCategories);
         const selectedIndicator = (<span><i className="fa fa-angle-double-right" aria-hidden="true" /></span>);
         return (
             <div>
@@ -46,12 +58,12 @@ class Sidebar extends PureComponent {
                             {/* ${sliderValue.min} - ${sliderValue.max} */}
                         </input>
                     </p>
-                    {/* <InputRange
+                    <InputRange
                         maxValue={1000}
                         minValue={0}
-                        value={sliderValue}
-                        onChange={value => onSliderChangeValue(value)}
-                     /> */}
+                        value={this.state.sliderValue}
+                        onChange={value => this.handleSliderChangeValue(value)}
+                     />
                            {/* <Slider
                                 value={[10,20]}
                                 onChange={handleChange}
@@ -59,7 +71,7 @@ class Sidebar extends PureComponent {
                                 aria-labelledby="range-slider"
                                 getAriaValueText={valuetext}
                             /> */}
-                    <div className="filter_button"><span>filter</span></div>
+                    <div className="filter_button" onClick={() => onSliderChangeValue(this.state.sliderValue)}><span>filter</span></div>
                     </div>
                             
             </div>

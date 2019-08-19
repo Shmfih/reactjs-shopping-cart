@@ -10,6 +10,7 @@ import Footer from '../Shared/Footer/Footer';
 import '../HomePage/HomePage.scss';
 
 
+
 class HomePage extends PureComponent {
     render() {
         return (
@@ -26,5 +27,7 @@ class HomePage extends PureComponent {
 HomePage.propTypes = {
 
 };
+
+
 
 export default HomePage;

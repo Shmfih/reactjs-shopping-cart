@@ -9,7 +9,7 @@ import ProductSort from './ProductSort';
 import categoriesApi from '../../../api/categoriesApi';
 
 
-export default class NewArrival extends PureComponent {
+class NewArrival extends PureComponent {
 
   constructor (props) {
     super(props);
@@ -76,7 +76,7 @@ export default class NewArrival extends PureComponent {
   render() {
     const { productList, filterList, currentFilter, postLoading } = this.state;
     if(postLoading) return "Loading...";
-    console.log(productList);
+    console.log(this.props);
     return (
       <div>
         <div className="new_arrivals">
@@ -108,3 +108,6 @@ export default class NewArrival extends PureComponent {
     )
   }
 }
+
+
+export default NewArrival;

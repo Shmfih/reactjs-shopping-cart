@@ -19,6 +19,11 @@ class MainProductsContent extends PureComponent {
             default: "Default Sorting",
             price: "Price",
             name: "Product name",
+        };
+        const totalPage = Math.ceil(currentFilter.totalProduct/currentFilter.productPerPage);
+        let pageList = [];
+        for(let nPage=0; nPage <= (totalPage-1); nPage++){
+            pageList.push(nPage+1);
         }
         return (
                 <div className="main_content">
@@ -44,23 +49,25 @@ class MainProductsContent extends PureComponent {
                             <span className="num_sorting_text">{currentFilter.productPerPage}</span>
                             <i className="fa fa-angle-down" />
                             <ul className="sorting_num">
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 6})}><span>6</span></li>
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 12})}><span>12</span></li>
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 24})}><span>24</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 6, currentPage: 1})}><span>6</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 12, currentPage: 1})}><span>12</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 24, currentPage: 1})}><span>24</span></li>
                             </ul>
                             </li>
                         </ul>
                         <div className="pages d-flex flex-row align-items-center">
                             <div className="page_current">
-                            <span>1</span>
+                            <span>{currentFilter.currentPage}</span>
                             <ul className="page_selection">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
+                                {
+                                    pageList.map(page => (
+                                        <li key={page} onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}>{page}</li>
+                                    ))
+                                }
                             </ul>
                             </div>
-                            <div className="page_total"><span>of</span> 3</div>
-                            <div id="next_page" className="page_next"><a href="#"><i className="fa fa-long-arrow-right" aria-hidden="true" /></a></div>
+                            <div className="page_total"><span>of</span> {totalPage}</div>
+                            <div id="next_page" className="page_next" onClick={()=> onChangeFilter({...currentFilter, currentPage: currentFilter.currentPage + 1})}><i className="fa fa-long-arrow-right" aria-hidden="true" /></div>
                         </div>
                         </div>
 
@@ -70,7 +77,40 @@ class MainProductsContent extends PureComponent {
                         ))}
                         </div>
 
-                        <BottomPageProductSorting />
+                        {/* BottomPageProductSorting */}
+                        <div className="product_sorting_container product_sorting_container_bottom clearfix">
+                            <ul className="product_sorting">
+                                <li>
+                                <span>Show:</span>
+                                <span className="num_sorting_text">{currentFilter.currentPage}</span>
+                                <i className="fa fa-angle-down" />
+                                <ul className="sorting_num">
+                                    {
+                                        pageList.map(page => (
+                                            <li key={page} className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}><span>{page}</span></li>
+                                        ))
+                                    }
+                                </ul>
+                                </li>
+                            </ul>
+                            <span className="showing_results">
+                                Showing {currentFilter.currentPage}–{totalPage} of {currentFilter.productPerPage} results
+                            </span>
+                            <div className="pages d-flex flex-row align-items-center">
+                                <div className="page_current">
+                                <span>{currentFilter.currentPage}</span>
+                                <ul className="page_selection">
+                                {
+                                    pageList.map(page => (
+                                        <li key={page} onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}>{page}</li>
+                                    ))
+                                }
+                                </ul>
+                                </div>
+                                <div className="page_total"><span>of</span> {totalPage}</div>
+                                <div id="next_page_1" className="page_next" onClick={()=> onChangeFilter({...currentFilter, currentPage: currentFilter.currentPage + 1})}><i className="fa fa-long-arrow-right" aria-hidden="true" /></div>
+                            </div>
+                        </div>
                     </div>
                     </div>
                 </div>

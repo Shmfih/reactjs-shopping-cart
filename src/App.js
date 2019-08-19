@@ -7,9 +7,9 @@ import Contact from './components/Contact/Contact';
 import Header from './components/Shared/Header/Header';
 import Footer from './components/Shared/Footer/Footer';
 
-// import './App.scss';
 
 function App() {
+  
   return (
     <div>
       
