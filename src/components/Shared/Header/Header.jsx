@@ -10,7 +10,7 @@ class Header extends PureComponent {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         {/* Header */}
@@ -72,10 +72,10 @@ class Header extends PureComponent {
                         <li><a href="#"><i className="fa fa-search" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i className="fa fa-user" aria-hidden="true"></i></a></li>
                         <li className="checkout">
-                          <a href="#">
+                          <NavLink to ="/checkout">
                             <i className="fa fa-shopping-cart" aria-hidden="true" />
                             <span id="checkout_items" className="checkout_items">{this.props.totalProduct}</span>
-                          </a>
+                          </NavLink>
                         </li>
                       </ul>
                       <div className="hamburger_container">

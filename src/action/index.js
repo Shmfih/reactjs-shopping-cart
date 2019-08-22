@@ -5,3 +5,15 @@ export const addProductToCart = (product, quantity) => ({
     product,
     quantity
 });
+
+export const removeProductFromCart = (product, quantity) => ({
+    type: ActionType.REMOVE_PRODUCT_FROM_CART,
+    product,
+    quantity
+});
+
+export const deleteProductFromCart = (product, quantity) => ({
+    type: ActionType.DELETE_PRODUCT_FROM_CART,
+    product,
+    quantity
+});

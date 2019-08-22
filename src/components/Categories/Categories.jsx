@@ -1,18 +1,12 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Header from '../Shared/Header/Header';
-import Footer from '../Shared/Footer/Footer';
 import Breadcrumbs from '../Shared/Breadcrumbs/Breadcrumbs';
 import MainProductsContent from './MainProductsContent/MainProductsContent';
 import Sidebar from './Sidebar/Sidebar';
-import Benefit from './Benefit/Benefit';
 import '../../styles/categories_styles.css';
 import '../../styles/categories_responsive.css';
-import BottomPageProductSorting from './MainProductsContent/BottomPageProductSorting/BottomPageProductSorting';
 import productApi from '../../api/productApi';
 import categoriesApi from '../../api/categoriesApi';
-import queryString from '../../api/queryString';
-import { thisExpression } from '@babel/types';
+
 
 class Categories extends PureComponent {
     constructor(props){
@@ -20,37 +14,24 @@ class Categories extends PureComponent {
         // Init state from url search params
         const urlParams = new URLSearchParams(this.props.location.search);
         const initPage = urlParams.get("page");
+        const initShow = urlParams.get("show");
         const initSort = urlParams.get("sort");
+        const initFromPrice = urlParams.get("fromPrice");
+        const initToPrice = urlParams.get("toPrice");
         const initCategories = urlParams.get("categories");
         this.state = {
             currentFilter: {
                 currentCategories: initCategories?initCategories:"",
                 sortBy: initSort?initSort:"",
-                productPerPage: 6,
+                productPerPage: initShow?initShow:6,
                 currentPage: initPage?initPage:1,
                 totalProduct: 0,
-                priceRange: {min: 0, max: 1000},
+                priceRange: {min: initFromPrice?Number(initFromPrice):300, max: initToPrice?Number(initToPrice):750},
             },
             productList: [],
             quickCategories: {},
             productLoading: true,
 
-        }
-    }
-
-    handleChangeCategories = (newCategories) => {
-        const newFilterState= {
-            currentFilter:{
-                ...this.state.currentFilter,
-                currentCategories: newCategories,
-            }};
-        this.setState(newFilterState);
-        this.getProductList(newFilterState.currentFilter);
-        console.log(newFilterState);
-        if(!newCategories){
-            this.props.history.push(`/shop`);
-        } else {
-            this.props.history.push(`/shop?categories=${newCategories}`)
         }
     }
 
@@ -70,6 +51,7 @@ class Categories extends PureComponent {
 
     getProductList = async (productFilter) => {
         const { currentCategories, sortBy, productPerPage, currentPage, priceRange } = productFilter;
+        console.log(productFilter);
         try {
             
             // Prepair params
@@ -90,18 +72,11 @@ class Categories extends PureComponent {
                     ...filter.where,
                     categoryId: this.state.quickCategories[currentCategories],}
               ,}};
-            // if(!!priceRange){
-            //     filter = {
-            //         ...filter,
-            //         where: {
-            //         salePrice: `>${priceRange.min}`,
-            //     },}};
-            
-            console.log(JSON.stringify(filter));
+            console.log(filter);
             const params = {
               filter: JSON.stringify(filter),
             }
-
+            
             // Get product list
             const response = await productApi.getAll(params);
             const { body: productList } = response;
@@ -143,11 +118,41 @@ class Categories extends PureComponent {
         
     }
 
-    handleChangeFilter = (newFilter) => {
-        this.setState({...this.state, currentFilter: newFilter});
-        const { sortBy, currentPage, currentCategories } = this.state;
-        // this.props.history.push(`/product?${sortBy?`sort=${sortBy}&`:""}page=${currentPage}&categories=${currentCategories}`);
-        this.getProductList(newFilter);
+
+    makeParamsURL = (filter) => {
+        return `/shop?categories=${filter.currentCategories}&show=${filter.productPerPage}&page=${filter.currentPage}&sort=${filter.sortBy}&fromPrice=${filter.priceRange.min}&toPrice=${filter.priceRange.max}` 
+    }
+
+    // Change filter functions
+
+    handleChangeCategories = (newCategories) => {
+        const { currentFilter } = this.state;
+        const newState = {
+            ...this.state,
+            currentFilter: {
+                ...currentFilter,
+                currentCategories: newCategories,
+            }
+        }
+        console.log("newState",newState);
+        this.setState(newState);
+        this.getProductList(newState.currentFilter);
+        this.props.history.replace(this.makeParamsURL(newState.currentFilter));
+    }
+
+
+    handleChangeCurrentPage = (pageNum) => {
+        const { currentFilter } = this.state;
+        const newState = {
+            ...this.state,
+            currentFilter: {
+                ...currentFilter,
+                currentPage: pageNum,
+            }
+        }
+        this.setState(newState);
+        this.getProductList(newState.currentFilter);
+        this.props.history.replace(this.makeParamsURL(newState.currentFilter));
     }
     
     handleSliderChangeValue = (newValue) => {
@@ -161,32 +166,58 @@ class Categories extends PureComponent {
         }
         this.setState(newState);
         this.getProductList(newState.currentFilter);
-        console.log(this.state);
+        this.props.history.replace(this.makeParamsURL(newState.currentFilter));
     }
 
+    handleChangeSortType = (newSortType) => {
+        const { currentFilter } = this.state;
+        const newState = {
+            ...this.state,
+            currentFilter: {
+                ...currentFilter,
+                sortBy: newSortType,
+                currentPage: 1,
+            }
+        }
+        this.setState(newState);
+        this.getProductList(newState.currentFilter);
+        this.props.history.replace(this.makeParamsURL(newState.currentFilter));
+    }
+
+    handleChangeProductPerPage = (newPPP) => {
+        const { currentFilter } = this.state;
+        const newState = {
+            ...this.state,
+            currentFilter: {
+                ...currentFilter,
+                productPerPage: newPPP,
+                currentPage: 1,
+            }
+        }
+        this.getProductList(newState.currentFilter);
+        this.getProductList(newState);
+        this.props.history.replace(this.makeParamsURL(newState.currentFilter));
+    }
     render() {
-        console.log(this.state);
         const { currentFilter, productLoading, productList, quickCategories } = this.state;
+        console.log(this.state);
         if(productLoading) return "";
         return (
-            <div>
-               <div className="container product_section_container">
+            <div className="container product_section_container">
 		        <div className="row">
-			    <div className="col product_section clearfix">
-               <Breadcrumbs />
-               <Sidebar
-                    categoriesList={quickCategories} onChangeCategories={this.handleChangeCategories}
-                    onSliderChangeValue = {this.handleSliderChangeValue}
-                    currentFilter={currentFilter} />
-               <MainProductsContent productList={productList}
-                currentFilter = {currentFilter}
-                onChangeFilter={this.handleChangeFilter} />
-               </div>
-               
-               </div>
-               
-               </div>
-
+			        <div className="col product_section clearfix">
+                <Breadcrumbs />
+                <Sidebar
+                        categoriesList={quickCategories} onChangeCategories={this.handleChangeCategories}
+                        onSliderChangeValue = {this.handleSliderChangeValue}
+                        currentFilter={currentFilter} />
+                <MainProductsContent productList={productList}
+                        currentFilter = {currentFilter}
+                        onChangeCurrentPage = {this.handleChangeCurrentPage}
+                        onChangeProductPerPage = {this.handleChangeProductPerPage}
+                        onChangeSortType = {this.handleChangeSortType} />
+                    </div>
+                </div>
             </div>
         );
     }

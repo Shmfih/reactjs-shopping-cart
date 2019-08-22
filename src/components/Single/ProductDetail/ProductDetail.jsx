@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import '../ProductDetail/ProductDetail.scss';
-import { thisExpression } from '@babel/types';
-
+import { connect } from 'react-redux';
+import { addProductToCart } from '../../../action/index';
 class ProductDetail extends PureComponent {
 
     constructor(props){
@@ -24,13 +24,11 @@ class ProductDetail extends PureComponent {
 
     handleChangeImage = (image) => {
         this.setState({currentImage: image});
-        console.log(this.state)
     }
 
     render() {
-        const { product } = this.props;
+        const { product, addProductToCart } = this.props;
         const { productQuantity, currentImage } = this.state;
-        console.log(this.props.product);
         return (
             <div>
                 <div className="row">
@@ -93,7 +91,7 @@ class ProductDetail extends PureComponent {
                                 <span id="quantity_value">{productQuantity}</span>
                                 <span className="plus" onClick={() => this.handleIncreaseProductClick()}><i className="fa fa-plus" aria-hidden="true" /></span>
                                 </div>
-                                <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                                <button type="button" class="btn btn-danger" onClick={()=>addProductToCart(product,productQuantity)}>ADD TO CART</button>
                                 <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />
                             </div>
                             </div>
@@ -108,4 +106,9 @@ ProductDetail.propTypes = {
 
 };
 
-export default ProductDetail;
+
+const mapDispatchToProps = dispatch => ({
+    addProductToCart: (product, quantity) => dispatch(addProductToCart(product, quantity))
+  });
+
+export default connect(null, mapDispatchToProps)(ProductDetail);

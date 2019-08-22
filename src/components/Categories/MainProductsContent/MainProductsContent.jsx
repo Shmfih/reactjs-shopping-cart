@@ -4,8 +4,8 @@ import ProductItem from './ProductItem/ProductItem';
 import TopPageProductSorting from './TopPageProductSorting/TopPageProductSorting';
 import BottomPageProductSorting from './BottomPageProductSorting/BottomPageProductSorting';
 import productApi from '../../../api/productApi';
-
-
+import { connect } from 'react-redux';
+import { addProductToCart } from '../../../action/index';
 class MainProductsContent extends PureComponent {
 
 
@@ -14,10 +14,10 @@ class MainProductsContent extends PureComponent {
     }
 
     render() {
-        const {productList, onChangeFilter, currentFilter }=this.props;
+        const { productList, currentFilter, onChangeCurrentPage, onChangeProductPerPage, onChangeSortType, addProductToCart }=this.props;
         const sortType = {
             default: "Default Sorting",
-            price: "Price",
+            salePrice: "Price",
             name: "Product name",
         };
         const totalPage = Math.ceil(currentFilter.totalProduct/currentFilter.productPerPage);
@@ -25,6 +25,7 @@ class MainProductsContent extends PureComponent {
         for(let nPage=0; nPage <= (totalPage-1); nPage++){
             pageList.push(nPage+1);
         }
+        
         return (
                 <div className="main_content">
                 {/* Products */}
@@ -39,9 +40,9 @@ class MainProductsContent extends PureComponent {
                             <span className="type_sorting_text">{sortType[currentFilter.sortBy?currentFilter.sortBy:"default"]}</span>
                             <i className="fa fa-angle-down" />
                             <ul className="sorting_type" >
-                                <li className="type_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, sortBy: ""})}><span>Default Sorting</span></li>
-                                <li className="type_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, sortBy: "price"})}><span>Price</span></li>
-                                <li className="type_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, sortBy: "name"})}><span>Product Name</span></li>
+                                <li className="type_sorting_btn" onClick={()=> onChangeSortType("")}><span>Default Sorting</span></li>
+                                <li className="type_sorting_btn" onClick={()=> onChangeSortType("salePrice")}><span>Price</span></li>
+                                <li className="type_sorting_btn" onClick={()=> onChangeSortType("name")}><span>Product Name</span></li>
                             </ul>
                             </li>
                             <li>
@@ -49,9 +50,9 @@ class MainProductsContent extends PureComponent {
                             <span className="num_sorting_text">{currentFilter.productPerPage}</span>
                             <i className="fa fa-angle-down" />
                             <ul className="sorting_num">
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 6, currentPage: 1})}><span>6</span></li>
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 12, currentPage: 1})}><span>12</span></li>
-                                <li className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, productPerPage: 24, currentPage: 1})}><span>24</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeProductPerPage(6)}><span>6</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeProductPerPage(12)}><span>12</span></li>
+                                <li className="num_sorting_btn" onClick={()=> onChangeProductPerPage(24)}><span>24</span></li>
                             </ul>
                             </li>
                         </ul>
@@ -61,19 +62,25 @@ class MainProductsContent extends PureComponent {
                             <ul className="page_selection">
                                 {
                                     pageList.map(page => (
-                                        <li key={page} onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}>{page}</li>
+                                        <li key={page} onClick={()=> onChangeCurrentPage(page)}>{page}</li>
                                     ))
                                 }
                             </ul>
                             </div>
                             <div className="page_total"><span>of</span> {totalPage}</div>
-                            <div id="next_page" className="page_next" onClick={()=> onChangeFilter({...currentFilter, currentPage: currentFilter.currentPage + 1})}><i className="fa fa-long-arrow-right" aria-hidden="true" /></div>
+                            <div id="next_page" className="page_next" onClick={()=> onChangeCurrentPage(currentFilter.currentPage + 1)}>
+                                <i className="fa fa-long-arrow-right" aria-hidden="true" />
+                            </div>
                         </div>
                         </div>
 
+
+
+
+                        {/* Product List */}
                         <div className="product-grid" style={{height: Math.ceil(productList.lenght/4)*360 + "px" }}>
                         {productList.map(product => (
-                            <ProductItem key={product.id} product={product} />
+                            <ProductItem key={product.id} product={product} addProductToCart={addProductToCart}/>
                         ))}
                         </div>
 
@@ -87,7 +94,7 @@ class MainProductsContent extends PureComponent {
                                 <ul className="sorting_num">
                                     {
                                         pageList.map(page => (
-                                            <li key={page} className="num_sorting_btn" onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}><span>{page}</span></li>
+                                            <li key={page} className="num_sorting_btn" onClick={()=> onChangeCurrentPage(page)}><span>{page}</span></li>
                                         ))
                                     }
                                 </ul>
@@ -102,13 +109,15 @@ class MainProductsContent extends PureComponent {
                                 <ul className="page_selection">
                                 {
                                     pageList.map(page => (
-                                        <li key={page} onClick={()=> onChangeFilter({...currentFilter, currentPage: page})}>{page}</li>
+                                        <li key={page} onClick={()=> onChangeCurrentPage(page)}>{page}</li>
                                     ))
                                 }
                                 </ul>
                                 </div>
                                 <div className="page_total"><span>of</span> {totalPage}</div>
-                                <div id="next_page_1" className="page_next" onClick={()=> onChangeFilter({...currentFilter, currentPage: currentFilter.currentPage + 1})}><i className="fa fa-long-arrow-right" aria-hidden="true" /></div>
+                                <div id="next_page_1" className="page_next" onClick={()=> onChangeCurrentPage(currentFilter.currentPage + 1)}>
+                                    <i className="fa fa-long-arrow-right" aria-hidden="true" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -124,4 +133,8 @@ MainProductsContent.propTypes = {
 
 };
 
-export default MainProductsContent;
+const mapDispatchToProps = dispatch => ({
+    addProductToCart: (product) => dispatch(addProductToCart(product, 1))
+  });
+
+export default connect(null, mapDispatchToProps)(MainProductsContent);

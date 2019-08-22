@@ -10,10 +10,7 @@ class Sidebar extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
-            sliderValue: {
-                min: 100,
-                max: 500,
-            }
+            sliderValue: this.props.currentFilter.priceRange,
         };
 
     }
@@ -27,10 +24,10 @@ class Sidebar extends PureComponent {
     render() {
         const {categoriesList, currentFilter, onChangeCategories, onSliderChangeValue} = this.props;
         // Covert quick categories into array
+        console.log(this.state);
         const categoriesArray = Object.entries(categoriesList);
         const selectedIndicator = (<span><i className="fa fa-angle-double-right" aria-hidden="true" /></span>);
         return (
-            <div>
                 <div className="sidebar">
                     <div className="sidebar_section">
                         <div className="sidebar_title">
@@ -42,9 +39,9 @@ class Sidebar extends PureComponent {
                                 <li className={categories[0]===currentFilter.currentCategories?"active":""} key={categories[0]} onClick={() => onChangeCategories(categories[0])} ><NavLink to={`/shop?categories=${categories[0]}`}> {this.toTitleCase(categories[0])} </NavLink></li>
                             ))}
 
-                        <li><a href="#">New Arrivals</a></li>
+                        {/* <li><a href="#">New Arrivals</a></li>
                         <li><a href="#">Collection</a></li>
-                        <li><a href="categories.html">shop</a></li>
+                        <li><a href="categories.html">shop</a></li> */}
                         </ul>
                     </div>
 
@@ -75,7 +72,6 @@ class Sidebar extends PureComponent {
                     </div>
                             
             </div>
-        </div>
         );
     }
 }

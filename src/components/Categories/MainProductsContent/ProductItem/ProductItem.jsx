@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom';
 class ProductItem extends PureComponent {
 
     render() {
-        const { product } = this.props;
+        const { product, addProductToCart } = this.props;
         const isDiscount = !(product.originalPrice === product.salePrice)
         return (
             <div className="product-item">
@@ -20,7 +20,7 @@ class ProductItem extends PureComponent {
                     <div className="product_price">{`$${product.salePrice}`}{isDiscount && <span>{`$${product.originalPrice}`}</span>}</div>
                 </div>
                 </div>
-                <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                <div className="red_button add_to_cart_button" onClick={()=>addProductToCart(product)}>add to cart</div>
             </div>
 
         );
