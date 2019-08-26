@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';np
+import PropTypes from 'prop-types';
 import ProductItem from './ProductItem/ProductItem';
 import { connect } from 'react-redux';
 import { addProductToCart } from '../../action/index';
