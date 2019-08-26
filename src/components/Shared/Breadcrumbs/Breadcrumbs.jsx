@@ -1,19 +1,31 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import { toTitleCase } from '../../../common_function';
 
 class Breadcrumbs extends PureComponent {
-    render() {
-        return (
-            <div>
-                <div className="breadcrumbs d-flex flex-row align-items-center">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li className="active"><a href="index.html"><i className="fa fa-angle-right" aria-hidden="true" />Men's</a></li>
-                    </ul>
-                    </div>
-            </div>
-        );
-    }
+
+	render() {
+		const { breadCrumbsPath } = this.props;
+		// console.log(this.props);
+		return (
+			<div className="breadcrumbs d-flex flex-row align-items-center">
+				<ul>
+					<li>
+						<NavLink to="/">Home</NavLink>
+					</li>
+					{breadCrumbsPath.map((item, idx) => (
+						<li key={idx} className={idx === breadCrumbsPath.length - 1 ? 'active' : ''}>
+							<NavLink to={item[1]}>
+								<i className="fa fa-angle-right" aria-hidden="true" />
+								{toTitleCase(item[0])}
+							</NavLink>
+						</li>
+					))}
+				</ul>
+			</div>
+		);
+	}
 }
 
 Breadcrumbs.propTypes = {

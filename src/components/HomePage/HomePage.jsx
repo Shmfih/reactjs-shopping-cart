@@ -9,25 +9,19 @@ import ShippingInformation from '../HomePage/ShippingInformation/ShippingInforma
 import Footer from '../Shared/Footer/Footer';
 import '../HomePage/HomePage.scss';
 
-
-
 class HomePage extends PureComponent {
-    render() {
-        return (
-            <div>
-                <HeroBanner />
-                <QuickCatetories />
-                <NewArrival />
-                <DealOfTheWeek />
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div>
+				<HeroBanner />
+				<QuickCatetories />
+				<NewArrival />
+				<DealOfTheWeek />
+			</div>
+		);
+	}
 }
 
-HomePage.propTypes = {
-
-};
-
-
+HomePage.propTypes = {};
 
 export default HomePage;

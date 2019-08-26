@@ -231,8 +231,8 @@ COLOR PALETTE
 }
 .add_to_cart_button
 {
-	width: 160px;
-	margin-left: 19px;
+	width: 100%;
+	margin-left: 0;
 	font-size: 12px !important;
 }
 .product_favorite
