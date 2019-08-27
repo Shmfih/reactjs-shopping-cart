@@ -20,7 +20,7 @@ class ProductItem extends PureComponent {
 					)}
 					<div className="product_info">
 						<h6 className="product_name">
-							<NavLink to={`/product/${product.id}`}>{product.name}</NavLink>
+							<NavLink to={`./product/${product.id}`}>{product.name}</NavLink>
 						</h6>
 						<div className="product_price">
 							{`$${product.salePrice}`}

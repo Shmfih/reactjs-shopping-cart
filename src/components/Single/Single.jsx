@@ -54,9 +54,9 @@ class Single extends PureComponent {
 		// Give breadcrumbs a path to render
 		const categoryName = this.getKeyByValue(categoriesList, productDetail.categoryId);
 		const breadCrumbsPath = [
-			['All products', '/shop'],
-			[categoryName, `/shop?categories=${categoryName}`],
-			[productDetail.name, `/product/${productDetail.id}`]
+			['All products', './shop'],
+			[categoryName, `./shop?categories=${categoryName}`],
+			[productDetail.name, `./product/${productDetail.id}`]
 		];
 
 		return (

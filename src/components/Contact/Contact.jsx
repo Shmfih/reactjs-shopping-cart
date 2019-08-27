@@ -5,7 +5,7 @@ import Breadcrumbs from '../Shared/Breadcrumbs/Breadcrumbs';
 class Contact extends PureComponent {
 	render() {
 		const breadCrumbsPath = [
-			["Contact", "/contact"],
+			["Contact", "./contact"],
 		];
 		return (
 				<div className="row">

@@ -12,7 +12,7 @@ class Breadcrumbs extends PureComponent {
 			<div className="breadcrumbs d-flex flex-row align-items-center">
 				<ul>
 					<li>
-						<NavLink to="/">Home</NavLink>
+						<NavLink to="./">Home</NavLink>
 					</li>
 					{breadCrumbsPath.map((item, idx) => (
 						<li key={idx} className={idx === breadCrumbsPath.length - 1 ? 'active' : ''}>

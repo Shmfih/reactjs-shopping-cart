@@ -16,7 +16,7 @@ class HeroBanner extends Component {
 									<h6>Spring / Summer Collection 2017</h6>
 									<h1>Get up to 30% Off New Arrivals</h1>
 									<div className="red_button shop_now_button">
-										<NavLink to="/shop">shop now</NavLink>
+										<NavLink to="./shop">shop now</NavLink>
 									</div>
 								</div>
 							</div>

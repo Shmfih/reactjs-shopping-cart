@@ -36,7 +36,7 @@ class Sidebar extends PureComponent {
 							key="all"
 							onClick={() => onChangeCategories('')}
 						>
-							<NavLink to="/shop">
+							<NavLink to="./shop">
 								{currentFilter.currentCategories === '' && selectedIndicator}All
 							</NavLink>
 						</li>
@@ -47,7 +47,7 @@ class Sidebar extends PureComponent {
 								key={categories[0]}
 								onClick={() => onChangeCategories(categories[0])}
 							>
-								<NavLink to={`/shop?categories=${categories[0]}`}>
+								<NavLink to={`./shop?categories=${categories[0]}`}>
 									{categories[0] === currentFilter.currentCategories && selectedIndicator}
 									{toTitleCase(categories[0])}
 								</NavLink>
