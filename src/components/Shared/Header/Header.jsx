@@ -98,9 +98,9 @@ class Header extends PureComponent {
 													</NavLink>
 												</li>
 												<li>
-													<NavLink to="https://github.com/shmfih" target="blank">
+													<a href="https://github.com/shmfih" target="blank">
 														blog
-													</NavLink>
+													</a>
 												</li>
 												<li>
 													<NavLink to="contact">
