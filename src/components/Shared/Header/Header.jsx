@@ -83,27 +83,27 @@ class Header extends PureComponent {
 										<nav className="navbar">
 											<ul className="navbar_menu">
 												<li>
-													<NavLink exact to="/">
+													<NavLink to="/">
 														home
 													</NavLink>
 												</li>
 												<li>
-													<NavLink exact to="/shop">
+													<NavLink to="/shop">
 														shop
 													</NavLink>
 												</li>
 												<li>
-													<NavLink exact to="#">
+													<NavLink exact to="/shop">
 														promotion
 													</NavLink>
 												</li>
 												<li>
-													<NavLink exact to="#" target="blank">
+													<NavLink to="https://github.com/shmfih" target="blank">
 														blog
 													</NavLink>
 												</li>
 												<li>
-													<NavLink exact to="contact">
+													<NavLink to="contact">
 														contact
 													</NavLink>
 												</li>
