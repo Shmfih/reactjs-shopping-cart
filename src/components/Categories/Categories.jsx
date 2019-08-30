@@ -202,7 +202,8 @@ class Categories extends PureComponent {
 			['Categories', '/shop'],
 			[currCategories ? currCategories : 'All', `/shop${currCategories ? `?categories=${currCategories}` : ''}`]
 		];
-		if (productLoading) return '';
+		// if (productLoading) return "";
+		console.log(this.props)
 		return (
 			<div className="container product_section_container">
 				<div className="row">

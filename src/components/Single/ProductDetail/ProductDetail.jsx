@@ -13,16 +13,16 @@ class ProductDetail extends PureComponent {
 	}
 
 	handleIncreaseProductClick = () => {
-		this.setState({ productQuantity: this.state.productQuantity + 1 });
+		this.setState({ ...this.state, productQuantity: this.state.productQuantity + 1 });
 	};
 
 	handleDecreaseProductClick = () => {
 		if (this.state.productQuantity === 1) return;
-		this.setState({ productQuantity: this.state.productQuantity - 1 });
+		this.setState({ ...this.state, productQuantity: this.state.productQuantity - 1 });
 	};
 
 	handleChangeImage = image => {
-		this.setState({ currentImage: image });
+		this.setState({ ...this.state, currentImage: image });
 	};
 
 	render() {

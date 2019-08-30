@@ -9,6 +9,7 @@ class Contact extends PureComponent {
 		const breadCrumbsPath = [
 			["Contact", "./contact"],
 		];
+		
 		return (
 				<div className="row">
 					<div className="container contact_container">

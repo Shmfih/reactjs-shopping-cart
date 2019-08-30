@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addProductToCart, removeProductFromCart, deleteProductFromCart } from '../../action/index';
+import './CheckOut.scss';
 
 class CheckOut extends PureComponent {
 	render() {
@@ -30,15 +31,15 @@ class CheckOut extends PureComponent {
 								<td>
 									<button
 										type="button"
-										class="btn btn-default btn-sm"
+										class="btn btn-default btn-sm decrease-button"
 										onClick={() => removeProductFromCart(item.product)}
 									>
 										-
 									</button>
-									<input style={{ width: '25px' }} type="text" value={item.quantity} />
+									<input className="product-quantity-input" type="text" value={item.quantity} />
 									<button
 										type="button"
-										class="btn btn-default btn-sm"
+										class="btn btn-default btn-sm increase-button"
 										onClick={() => addProductToCart(item.product)}
 									>
 										+

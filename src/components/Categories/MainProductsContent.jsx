@@ -101,7 +101,7 @@ class MainProductsContent extends PureComponent {
 								className="product-grid"
 								style={{ height: Math.ceil(productList.lenght / 4) * 360 + 'px' }}
 							>
-								{productList.map(product => (
+								{productList && productList.map(product => (
 									<ProductItem
 										key={product.id}
 										product={product}
