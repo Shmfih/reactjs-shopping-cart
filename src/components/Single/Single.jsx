@@ -53,11 +53,8 @@ class Single extends PureComponent {
 
 		// Give breadcrumbs a path to render
 		const categoryName = this.getKeyByValue(categoriesList, productDetail.categoryId);
-		const breadCrumbsPath = [
-			['All products', './shop'],
-			[categoryName, `./shop?categories=${categoryName}`],
-			[productDetail.name, `./product/${productDetail.id}`]
-		];
+		const breadCrumbsPath = [['All products', './shop'], [categoryName, `./shop?categories=${categoryName}`]];
+		if (productDetail) breadCrumbsPath.push([productDetail.name, `./product/${productDetail.id}`]);
 
 		return (
 			<div className="super_container">
@@ -68,7 +65,7 @@ class Single extends PureComponent {
 						</div>
 					</div>
 					<div className="row">
-						<ProductDetail product={productDetail} />
+						{productDetail && <ProductDetail product={productDetail} />}
 					</div>
 				</div>
 				<Tabs />
