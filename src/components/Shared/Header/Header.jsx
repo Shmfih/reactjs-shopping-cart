@@ -120,7 +120,7 @@ class Header extends PureComponent {
 													</a>
 												</li>
 												<li className="checkout">
-													<NavLink to="./checkout">
+													<NavLink to="/checkout">
 														<i className="fa fa-shopping-cart" aria-hidden="true" />
 														<span id="checkout_items" className="checkout_items">
 															{this.props.totalProduct}
