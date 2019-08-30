@@ -101,13 +101,14 @@ class MainProductsContent extends PureComponent {
 								className="product-grid"
 								style={{ height: Math.ceil(productList.lenght / 4) * 360 + 'px' }}
 							>
-								{productList && productList.map(product => (
-									<ProductItem
-										key={product.id}
-										product={product}
-										addProductToCart={addProductToCart}
-									/>
-								))}
+								{productList &&
+									productList.map(product => (
+										<ProductItem
+											key={product.id}
+											product={product}
+											addProductToCart={addProductToCart}
+										/>
+									))}
 							</div>
 
 							{/* BottomPageProductSorting */}
