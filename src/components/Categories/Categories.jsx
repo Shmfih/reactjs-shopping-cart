@@ -7,6 +7,7 @@ import '../../styles/categories_responsive.css';
 import productApi from '../../api/productApi';
 import categoriesApi from '../../api/categoriesApi';
 import { makeParamsURL } from '../../common_function';
+import Benefit from './Benefit/Benefit';
 
 class Categories extends PureComponent {
 	constructor(props) {
@@ -196,35 +197,38 @@ class Categories extends PureComponent {
 	};
 
 	render() {
-		const { currentFilter, productLoading, productList, quickCategories } = this.state;
+		const { currentFilter, productList, quickCategories } = this.state;
 		const currCategories = currentFilter.currentCategories;
 		const breadCrumbsPath = [
 			['Categories', '/shop'],
 			[currCategories ? currCategories : 'All', `/shop${currCategories ? `?categories=${currCategories}` : ''}`]
 		];
 		// if (productLoading) return "";
-		console.log(this.props)
+		console.log(this.props);
 		return (
-			<div className="container product_section_container">
-				<div className="row">
-					<div className="col product_section clearfix">
-						<Breadcrumbs breadCrumbsPath={breadCrumbsPath} />
-						<Sidebar
-							categoriesList={quickCategories}
-							onChangeCategories={this.handleChangeCategories}
-							onSliderChangeValue={this.handleSliderChangeValue}
-							currentFilter={currentFilter}
-						/>
-						<MainProductsContent
-							productList={productList}
-							currentFilter={currentFilter}
-							onChangeCurrentPage={this.handleChangeCurrentPage}
-							onChangeProductPerPage={this.handleChangeProductPerPage}
-							onChangeSortType={this.handleChangeSortType}
-						/>
+			<>
+				<div className="container product_section_container">
+					<div className="row">
+						<div className="col product_section clearfix">
+							<Breadcrumbs breadCrumbsPath={breadCrumbsPath} />
+							<Sidebar
+								categoriesList={quickCategories}
+								onChangeCategories={this.handleChangeCategories}
+								onSliderChangeValue={this.handleSliderChangeValue}
+								currentFilter={currentFilter}
+							/>
+							<MainProductsContent
+								productList={productList}
+								currentFilter={currentFilter}
+								onChangeCurrentPage={this.handleChangeCurrentPage}
+								onChangeProductPerPage={this.handleChangeProductPerPage}
+								onChangeSortType={this.handleChangeSortType}
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
+				<Benefit />
+			</>
 		);
 	}
 }

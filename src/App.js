@@ -20,6 +20,7 @@ function App() {
 					<Route exact path="/shop" component={Categories} />
 					<Route exact path="/checkout" component={CheckOut} />
 					<Route exact path="/contact" component={Contact} />
+					<Route render={props => (<div className="container" style={{marginTop: "200px"}}><h3>Nothing here... Back to <a href="/">homepage.</a></h3></div>)} />
 				</Switch>
 				<Footer />
 			</BrowserRouter>
