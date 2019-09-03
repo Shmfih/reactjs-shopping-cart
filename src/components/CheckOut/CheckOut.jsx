@@ -3,10 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addProductToCart, removeProductFromCart, deleteProductFromCart } from '../../action/index';
 import './CheckOut.scss';
+import {NavLink} from 'react-router-dom';
+import svg from './empty-cart.svg';
 
 class CheckOut extends PureComponent {
 	render() {
 		const { productList, addProductToCart, removeProductFromCart, deleteProductFromCart } = this.props;
+		console.log(productList);
+		if (productList.length===0)
+			return (
+				<div className="container" style={{marginTop: "180px"}}>
+					<img className="empty-cart "src={svg} />
+					<p className="empty-cart-text">
+						There are no products in your shopping cart.
+						Let's go back to <NavLink to="/shop">shop</NavLink> to buy something.
+					</p>
+				</div>
+			);
 		return (
 			<div className="container">
 				<table className="table table-hover" style={{ marginTop: '180px' }}>
@@ -31,7 +44,7 @@ class CheckOut extends PureComponent {
 								<td>
 									<button
 										type="button"
-										class="btn btn-default btn-sm decrease-button"
+										className="btn btn-default btn-sm decrease-button"
 										onClick={() => removeProductFromCart(item.product)}
 									>
 										-
@@ -39,7 +52,7 @@ class CheckOut extends PureComponent {
 									<input className="product-quantity-input" type="text" value={item.quantity} />
 									<button
 										type="button"
-										class="btn btn-default btn-sm increase-button"
+										className="btn btn-default btn-sm increase-button"
 										onClick={() => addProductToCart(item.product)}
 									>
 										+
@@ -48,7 +61,7 @@ class CheckOut extends PureComponent {
 								<td>
 									<button
 										type="button"
-										class="btn btn-default btn-sm"
+										className="btn btn-default btn-sm"
 										onClick={() => deleteProductFromCart(item.product, item.quantity)}
 									>
 										x
@@ -87,7 +100,7 @@ class CheckOut extends PureComponent {
 							<th></th>
 							<th></th>
 							<th>
-								<button type="button" class="btn btn-success">
+								<button type="button" className="btn btn-success">
 									Purchase
 								</button>
 							</th>
@@ -101,13 +114,13 @@ class CheckOut extends PureComponent {
 
 CheckOut.propTypes = {};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
 	productList: state.cart.productList
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	addProductToCart: (product) => dispatch(addProductToCart(product, 1)),
-	removeProductFromCart: (product) => dispatch(removeProductFromCart(product, 1)),
+const mapDispatchToProps = dispatch => ({
+	addProductToCart: product => dispatch(addProductToCart(product, 1)),
+	removeProductFromCart: product => dispatch(removeProductFromCart(product, 1)),
 	deleteProductFromCart: (product, quantity) => dispatch(deleteProductFromCart(product, quantity))
 });
 

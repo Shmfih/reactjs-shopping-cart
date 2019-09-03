@@ -64,9 +64,11 @@ class Categories extends PureComponent {
 		try {
 			// Prepair params for getting product list
 			const { currentCategories, sortBy, productPerPage, currentPage, priceRange } = requestFilter;
-			const skipItem = productPerPage * (currentPage - 1);
-			const limitItem = productPerPage;
+			// const skipItem = productPerPage * (currentPage - 1);
+			// const limitItem = productPerPage;
 			let filter = {
+				limit: productPerPage,
+				skip: productPerPage * (currentPage - 1),
 				order: `${sortBy === '' ? '' : sortBy + ' '}desc`,
 				where: {
 					salePrice: {
@@ -87,20 +89,23 @@ class Categories extends PureComponent {
 			}
 
 			// Get total product by filter params for page pagination
-			const getTotalProductParams = {
-				filter: JSON.stringify(filter)
-			};
-			const totalProductResponse = await productApi.getAll(getTotalProductParams);
-			const totalProduct = totalProductResponse.body.length;
+			// const getTotalProductParams = {
+			// 	filter: JSON.stringify(filter)
+			// };
+			// const totalProductResponse = await productApi.getAll(getTotalProductParams);
+			// const totalProduct = totalProductResponse.body.length;
+			// console.log("totalProductResponse",filter, totalProductResponse);
 
 			// Get product list
-			const getProductListFilter = { ...filter, limit: limitItem, skip: skipItem };
+			// const getProductListFilter = { ...filter, limit: limitItem, skip: skipItem };
 			const getProductListParams = {
-				filter: JSON.stringify(getProductListFilter)
+				filter: JSON.stringify(filter)
 			};
 			const productListResponse = await productApi.getAll(getProductListParams);
 			const { body: productList } = productListResponse;
-
+			const totalProduct = productListResponse.pagination.total;
+			console.log(filter, productListResponse);
+			// console.losg("productListResponse", getProductListFilter, productListResponse);
 			// Set state
 			this.setState({
 				currentFilter: { ...this.state.currentFilter, totalProduct },
@@ -204,7 +209,7 @@ class Categories extends PureComponent {
 			[currCategories ? currCategories : 'All', `/shop${currCategories ? `?categories=${currCategories}` : ''}`]
 		];
 		// if (productLoading) return "";
-		console.log(this.props);
+		// console.log(this.props);
 		return (
 			<>
 				<div className="container product_section_container">
