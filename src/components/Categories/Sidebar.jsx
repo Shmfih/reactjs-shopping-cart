@@ -12,11 +12,31 @@ class Sidebar extends PureComponent {
 		};
 	}
 
+	onChangeCategories = newCategories => {
+		const { currentFilter, onChangeCurrentFilter } = this.props;
+		const newFilter = {
+			...currentFilter,
+			currentPage: 1,
+			currentCategories: newCategories === 'default' ? '' : newCategories
+		};
+		onChangeCurrentFilter(newFilter);
+	};
+
+	onSliderChangeValue = newValue => {
+		const { currentFilter, onChangeCurrentFilter } = this.props;
+		const newFilter = {
+			...currentFilter,
+			priceRange: newValue
+		};
+		onChangeCurrentFilter(newFilter);
+	};
+
+
 	handleSliderChangeValue = newValue => {
 		this.setState({ sliderValue: newValue });
 	};
 	render() {
-		const { categoriesList, currentFilter, onChangeCategories, onSliderChangeValue } = this.props;
+		const { categoriesList, currentFilter } = this.props;
 		// Covert quick categories into array
 		const categoriesArray = Object.entries(categoriesList);
 		const selectedIndicator = (
@@ -34,7 +54,7 @@ class Sidebar extends PureComponent {
 						<li
 							className={currentFilter.currentCategories === '' ? 'active' : ''}
 							key="all"
-							onClick={() => onChangeCategories('')}
+							onClick={() => this.onChangeCategories('')}
 						>
 							<NavLink to="./shop">
 								{currentFilter.currentCategories === '' && selectedIndicator}All
@@ -45,7 +65,7 @@ class Sidebar extends PureComponent {
 							<li
 								className={categories[0] === currentFilter.currentCategories ? 'active' : ''}
 								key={categories[0]}
-								onClick={() => onChangeCategories(categories[0])}
+								onClick={() => this.onChangeCategories(categories[0])}
 							>
 								<NavLink to={`./shop?categories=${categories[0]}`}>
 									{categories[0] === currentFilter.currentCategories && selectedIndicator}
@@ -72,7 +92,7 @@ class Sidebar extends PureComponent {
 							onChange={value => this.handleSliderChangeValue(value)}
 						/>
 					</div>
-					<div className="filter_button" onClick={() => onSliderChangeValue(this.state.sliderValue)}>
+					<div className="filter_button" onClick={() => this.onSliderChangeValue(this.state.sliderValue)}>
 						<span>filter</span>
 					</div>
 				</div>

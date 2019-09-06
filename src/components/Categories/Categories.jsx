@@ -64,8 +64,6 @@ class Categories extends PureComponent {
 		try {
 			// Prepair params for getting product list
 			const { currentCategories, sortBy, productPerPage, currentPage, priceRange } = requestFilter;
-			// const skipItem = productPerPage * (currentPage - 1);
-			// const limitItem = productPerPage;
 			let filter = {
 				limit: productPerPage,
 				skip: productPerPage * (currentPage - 1),
@@ -88,25 +86,12 @@ class Categories extends PureComponent {
 				};
 			}
 
-			// Get total product by filter params for page pagination
-			// const getTotalProductParams = {
-			// 	filter: JSON.stringify(filter)
-			// };
-			// const totalProductResponse = await productApi.getAll(getTotalProductParams);
-			// const totalProduct = totalProductResponse.body.length;
-			// console.log("totalProductResponse",filter, totalProductResponse);
-
-			// Get product list
-			// const getProductListFilter = { ...filter, limit: limitItem, skip: skipItem };
 			const getProductListParams = {
 				filter: JSON.stringify(filter)
 			};
 			const productListResponse = await productApi.getAll(getProductListParams);
 			const { body: productList } = productListResponse;
 			const totalProduct = productListResponse.pagination.total;
-			console.log(filter, productListResponse);
-			// console.losg("productListResponse", getProductListFilter, productListResponse);
-			// Set state
 			this.setState({
 				currentFilter: { ...this.state.currentFilter, totalProduct },
 				productList,
@@ -128,73 +113,11 @@ class Categories extends PureComponent {
 
 	// Change filter functions
 
-	handleChangeCategories = newCategories => {
-		const { currentFilter } = this.state;
+	handleChangeCurrentFilter = newFilter => {
 		const newState = {
 			...this.state,
-			currentFilter: {
-				...currentFilter,
-				currentPage: 1,
-				currentCategories: newCategories === 'default' ? '' : newCategories
-			}
-		};
-		this.setState(newState);
-		this.getProductList(newState.currentFilter);
-		this.props.history.push(makeParamsURL(newState.currentFilter));
-	};
-
-	handleChangeCurrentPage = pageNum => {
-		const { currentFilter } = this.state;
-		const newState = {
-			...this.state,
-			currentFilter: {
-				...currentFilter,
-				currentPage: pageNum
-			}
-		};
-		this.setState(newState);
-		this.getProductList(newState.currentFilter);
-		this.props.history.push(makeParamsURL(newState.currentFilter));
-	};
-
-	handleSliderChangeValue = newValue => {
-		const { currentFilter } = this.state;
-		const newState = {
-			...this.state,
-			currentFilter: {
-				...currentFilter,
-				priceRange: newValue
-			}
-		};
-		this.setState(newState);
-		this.getProductList(newState.currentFilter);
-		this.props.history.push(makeParamsURL(newState.currentFilter));
-	};
-
-	handleChangeSortType = newSortType => {
-		const { currentFilter } = this.state;
-		const newState = {
-			...this.state,
-			currentFilter: {
-				...currentFilter,
-				sortBy: newSortType,
-				currentPage: 1
-			}
-		};
-		this.setState(newState);
-		this.getProductList(newState.currentFilter);
-		this.props.history.push(makeParamsURL(newState.currentFilter));
-	};
-
-	handleChangeProductPerPage = newPPP => {
-		const { currentFilter } = this.state;
-		const newState = {
-			...this.state,
-			currentFilter: {
-				...currentFilter,
-				productPerPage: newPPP,
-				currentPage: 1
-			}
+			currentFilter: newFilter,
+			productLoading: true,
 		};
 		this.setState(newState);
 		this.getProductList(newState.currentFilter);
@@ -202,14 +125,12 @@ class Categories extends PureComponent {
 	};
 
 	render() {
-		const { currentFilter, productList, quickCategories } = this.state;
+		const { currentFilter, productList, quickCategories, productLoading } = this.state;
 		const currCategories = currentFilter.currentCategories;
 		const breadCrumbsPath = [
 			['Categories', '/shop'],
 			[currCategories ? currCategories : 'All', `/shop${currCategories ? `?categories=${currCategories}` : ''}`]
 		];
-		// if (productLoading) return "";
-		// console.log(this.props);
 		return (
 			<>
 				<div className="container product_section_container">
@@ -218,16 +139,14 @@ class Categories extends PureComponent {
 							<Breadcrumbs breadCrumbsPath={breadCrumbsPath} />
 							<Sidebar
 								categoriesList={quickCategories}
-								onChangeCategories={this.handleChangeCategories}
-								onSliderChangeValue={this.handleSliderChangeValue}
 								currentFilter={currentFilter}
+								onChangeCurrentFilter={this.handleChangeCurrentFilter}
 							/>
 							<MainProductsContent
 								productList={productList}
 								currentFilter={currentFilter}
-								onChangeCurrentPage={this.handleChangeCurrentPage}
-								onChangeProductPerPage={this.handleChangeProductPerPage}
-								onChangeSortType={this.handleChangeSortType}
+								onChangeCurrentFilter={this.handleChangeCurrentFilter}
+								productLoading={productLoading}
 							/>
 						</div>
 					</div>
