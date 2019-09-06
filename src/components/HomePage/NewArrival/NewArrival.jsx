@@ -35,7 +35,7 @@ class NewArrival extends PureComponent {
 		}
 	}
 
-	getNewArrivalList = async (categoriesFilter) => {
+	getNewArrivalList = async categoriesFilter => {
 		try {
 			let filter = {
 				limit: 10,
@@ -63,14 +63,20 @@ class NewArrival extends PureComponent {
 		}
 	};
 
-	handleChangleFilter = (categoriesId) => {
+	handleChangleFilter = categoriesId => {
 		this.setState({ currentFilter: categoriesId });
 		this.getNewArrivalList(categoriesId);
 	};
 
 	render() {
 		const { productList, filterList, currentFilter, postLoading } = this.state;
-		if (postLoading) return 'Loading...';
+		if (postLoading)
+			return (
+				<div class="product-loading">
+					<img src="/images/loading.gif" />
+					<span>Loading new arrival list...</span>
+				</div>
+			);
 		return (
 			<div>
 				<div className="new_arrivals">

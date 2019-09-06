@@ -8,8 +8,6 @@ import BottomPageFilter from './BottomPageFilter';
 import './MainProduct.scss';
 
 class MainProductsContent extends PureComponent {
-
-
 	onChangeCurrentPage = pageNum => {
 		const { currentFilter, onChangeCurrentFilter } = this.props;
 		const newFilter = {
@@ -40,14 +38,14 @@ class MainProductsContent extends PureComponent {
 	};
 
 	render() {
-		const { productList, currentFilter,  addProductToCart, productLoading } = this.props;
+		const { productList, currentFilter, addProductToCart, productLoading } = this.props;
 		console.log(productLoading);
 		return (
 			<div className="main_content">
 				<div className="products_iso">
 					<div className="row">
 						<div className="col">
-						<div class="lds-spinner" />
+							<div class="lds-spinner" />
 							<TopPageFilter
 								currentFilter={currentFilter}
 								onChangeProductPerPage={this.onChangeProductPerPage}
@@ -59,7 +57,12 @@ class MainProductsContent extends PureComponent {
 								className="product-grid"
 								style={{ height: Math.ceil(productList.lenght / 4) * 360 + 'px' }}
 							>
-								{productLoading && (<div class="product-loading"><img src='/images/loading.gif' /><span>Loading...</span></div>)}
+								{productLoading && (
+									<div class="product-loading">
+										<img src="/images/loading.gif" />
+										<span>Loading...</span>
+									</div>
+								)}
 								{productList &&
 									productList.map(product => (
 										<ProductItem

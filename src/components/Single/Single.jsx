@@ -49,7 +49,13 @@ class Single extends PureComponent {
 
 	render() {
 		const { loading, productDetail, categoriesList } = this.state;
-		if (loading) return <p>Loading...</p>;
+		if (loading)
+			return (
+				<div class="product-loading">
+					<img src="/images/loading.gif" />
+					<span>Loading...</span>
+				</div>
+			);
 
 		// Give breadcrumbs a path to render
 		const categoryName = this.getKeyByValue(categoriesList, productDetail.categoryId);
@@ -64,9 +70,7 @@ class Single extends PureComponent {
 							<Breadcrumbs breadCrumbsPath={breadCrumbsPath} />
 						</div>
 					</div>
-					<div className="row">
-						{productDetail && <ProductDetail product={productDetail} />}
-					</div>
+					<div className="row">{productDetail && <ProductDetail product={productDetail} />}</div>
 				</div>
 				<Tabs />
 				<Benefit />
