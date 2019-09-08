@@ -3,7 +3,7 @@ import Breadcrumbs from '../Shared/Breadcrumbs/Breadcrumbs';
 import MainProductsContent from './MainProductsContent';
 import Sidebar from './Sidebar';
 import './Categories.scss';
-import '../../styles/categories_responsive.css';
+// import '../../styles/categories_responsive.css';
 import productApi from '../../api/productApi';
 import categoriesApi from '../../api/categoriesApi';
 import { makeParamsURL } from '../../common_function';

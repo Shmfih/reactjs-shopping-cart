@@ -11,8 +11,8 @@ class BottomPageFilter extends PureComponent {
         const { currentFilter, onChangeSortType, onChangeProductPerPage, onChangeCurrentPage } = this.props;
         let pageList = [];
         const totalPage = Math.ceil(currentFilter.totalProduct / currentFilter.productPerPage);
-		for (let nPage = 0; nPage <= totalPage - 1; nPage++) {
-			pageList.push(nPage + 1);
+		for (let nPage = 1; nPage <= totalPage; nPage++) {
+			pageList.push(nPage);
         }
 		const currPage = currentFilter.currentPage;
         return (

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { addProductToCart } from '../../action/index';
 import TopPageFilter from './TopPageFilter';
 import BottomPageFilter from './BottomPageFilter';
-import './MainProduct.scss';
+// import './MainProduct.scss';
+import Loading from './Loading';
 
 class MainProductsContent extends PureComponent {
 	onChangeCurrentPage = pageNum => {
@@ -57,13 +58,8 @@ class MainProductsContent extends PureComponent {
 								className="product-grid"
 								style={{ height: Math.ceil(productList.lenght / 4) * 360 + 'px' }}
 							>
-								{productLoading && (
-									<div class="product-loading">
-										<img src="/images/loading.gif" />
-										<span>Loading...</span>
-									</div>
-								)}
-								{productList &&
+								{productLoading && <Loading />}
+								{(productList && !productLoading) &&
 									productList.map(product => (
 										<ProductItem
 											key={product.id}
@@ -71,6 +67,9 @@ class MainProductsContent extends PureComponent {
 											addProductToCart={addProductToCart}
 										/>
 									))}
+								{(productList.length==0 && !productLoading) && (
+									<h5 style={{textAlign: "center"}}>No products found which match your selection...</h5>
+								)}
 							</div>
 
 							<BottomPageFilter

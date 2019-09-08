@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { toTitleCase } from '../../../common_function';
+import './Breadcrums.scss'
 
 class Breadcrumbs extends PureComponent {
 

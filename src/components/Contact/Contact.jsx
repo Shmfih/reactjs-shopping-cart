@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/contact_styles.css';
-import '../../styles/categories_responsive.css';
+import './Contact.scss';
 import Breadcrumbs from '../Shared/Breadcrumbs/Breadcrumbs';
 
 class Contact extends PureComponent {
