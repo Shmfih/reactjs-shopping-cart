@@ -64,7 +64,7 @@ class TopPageFilter extends PureComponent {
 						</ul>
 					</div>
 					<div className="page_total">
-						<span>of</span> {totalPage}
+						<span>of</span> {totalPage?totalPage:1}
 					</div>
 					<div
 						id="next_page"
